@@ -6,7 +6,10 @@ SECRET_KEY = 'p3gm=o9o+_r(5*o$$kn#h*8#n1r)aquf^^nm_v5u0pn^qa$=4*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [ "http://0.0.0.0:8000" , '*']
+CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:8000"]
+
+
 
 # CORS Config: install django-cors-headers and uncomment the following to allow CORS from any origin
 """
@@ -24,6 +27,15 @@ MIDDLEWARE = MIDDLEWARE + DEV_MIDDLEWARE  # CORS middleware should be at the top
 
 CORS_ORIGIN_ALLOW_ALL = True
 """
+
+# Simple JWT
+SIMPLE_JWT.update({
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
+    'SIGNING_KEY': SECRET_KEY,
+})
+
+PASSWORD_RESET_EXPIRE_DAYS = 1
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -44,3 +56,9 @@ else:
             'PORT': 5432,
         }
     }
+
+EMAIL_HOST = os.environ.setdefault('EMAIL_HOST', '')
+EMAIL_PORT = os.environ.setdefault('EMAIL_PORT', '')
+EMAIL_HOST_USER = os.environ.setdefault('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.setdefault('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = True

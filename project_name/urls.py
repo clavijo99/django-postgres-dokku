@@ -17,9 +17,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from main.urls import apiurls as main_api_urls
+from accounts.urls import api_urls as user_api_urls
+
+
+api_urls = ([
+    path('main/', include(main_api_urls, namespace='main')),
+    path('accounts/', include(user_api_urls, namespace='accounts')),
+], 'api')
+
 
 urlpatterns = [
     path('', include('main.urls')),
+    path('api/', include(api_urls, namespace='api')),
+    path('documentation/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('documentation/api/',
+         SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('admin/', admin.site.urls),
 ]
 

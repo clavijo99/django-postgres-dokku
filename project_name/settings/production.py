@@ -29,6 +29,8 @@ else:
         }
     }
 
+PASSWORD_RESET_EXPIRE_DAYS = 1
+
 # Email Config
 """
 EMAIL_PASSWORD = get_secret('EMAIL_PASSWORD')
