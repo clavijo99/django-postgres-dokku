@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
+from django.utils.translation import gettext_lazy as _
+
+
 from datetime import timedelta
 
 
@@ -30,19 +34,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Application definition
 
 DEPENDENCIES_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.humanize',
 ]
 
 PROJECT_APPS = [
     'main',
-    'accounts',
 ]
 
 ADDONS = [
@@ -66,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+ROOT_URLCONF = 'project_name.urls'
 
 TEMPLATES = [
     {
@@ -103,6 +106,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#jazzmin settings
+JAZZMIN_SETTINGS = {
+    "site_title": WSGI_APPLICATION.split(".")[0],
+    "login_logo": "logo.png",
+    "welcome_sign": 'Welcome a ' + WSGI_APPLICATION.split(".")[0],
+    "site_header": "Library",
+    "site_brand": WSGI_APPLICATION.split(".")[0],
+    "site_logo": "logo.png",
+    "copyright": WSGI_APPLICATION.split(".")[0],
+    "user_avatar": "avatar",
+    "language_chooser": True,
+}
+
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'main.exceptions.custom_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -136,6 +152,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+LANGUAGES = [
+    ("es", _("Spanish")),
+    ("en", _("English")),
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
